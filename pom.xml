@@ -42,8 +42,8 @@
          <name>JBoss Snapshots Repository</name>
          <url>https://repository.jboss.org/nexus/content/repositories/snapshots/</url>
       </snapshotRepository>
-   </distributionManagement>
 
+   </distributionManagement>
 
    <dependencies>
     <dependency>
@@ -67,5 +67,22 @@
          <timezone>0</timezone>
       </developer>
    </developers>
+
+   <build>
+      <plugins>
+         <plugin>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>2.2.1</version>
+            <executions>
+               <execution>
+                  <phase>verify</phase>
+                  <goals>
+                     <goal>jar</goal>
+                  </goals>
+               </execution>
+            </executions>
+         </plugin>
+      </plugins>
+   </build>
 
 </project>
