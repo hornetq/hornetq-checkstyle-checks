@@ -30,8 +30,6 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 public class RequiredAnnotationCheck extends Check
 {
 
-   public static final String MSG_KEY = "annotation.missing.required.parameter";
-
    public RequiredAnnotationCheck() {
    }
 
@@ -129,7 +127,7 @@ public class RequiredAnnotationCheck extends Check
                   propertiesText.append(",");
                }
             }
-            log(aAST, "Annotation @{0} missing one of the required properties ($1)", this.annotationName, propertiesText.toString());
+            log(aAST, "Annotation @{0} missing one of these required parameters: ({1})", this.annotationName, propertiesText.toString());
          }
 
       }
