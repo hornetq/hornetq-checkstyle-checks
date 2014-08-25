@@ -108,29 +108,33 @@ public class RequiredAnnotationCheck extends Check
       // we only check the annotations that we were asked to
       if (annotationName.equals(this.annotationName)) {
 
+         HashSet<String> missingParameters = new HashSet<String>(requiredParameters);
+
          String names[] = getAnnotationParameters(aAST);
 
-         int found = 0;
-         for (String p : names) {
-            if (requiredParameters.contains(p)) {
-               found++;
-            }
+         for (String lookupParameter : names) {
+            missingParameters.remove(lookupParameter);
          }
 
-         if (found != requiredParameters.size()) {
-            StringBuilder propertiesText = new StringBuilder();
-            Iterator<String> iter = requiredParameters.iterator();
-            while (iter.hasNext()) {
-               String text = iter.next();
-               propertiesText.append(text);
-               if (iter.hasNext()) {
-                  propertiesText.append(",");
-               }
-            }
-            log(aAST, "Annotation @{0} missing one of these required parameters: ({1})", this.annotationName, propertiesText.toString());
+         if (missingParameters.size() != 0) {
+            String propertiesText = mergeText(missingParameters.iterator());
+            log(aAST, "Annotation @{0} is missing required parameters: ({1})", this.annotationName, propertiesText.toString());
          }
 
       }
+   }
+
+   private String mergeText(Iterator<String> properties)
+   {
+      StringBuilder propertiesText = new StringBuilder();
+      while (properties.hasNext()) {
+         String text = properties.next();
+         propertiesText.append(text);
+         if (properties.hasNext()) {
+            propertiesText.append(",");
+         }
+      }
+      return propertiesText.toString();
    }
 
 
